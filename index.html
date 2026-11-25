@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f8fc">
+  <meta name="description" content="Personal calisthenics workout tracker">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="css/style.css">
+  <title>Calisthenics Tracker</title>
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">PERSONAL TRAINING JOURNAL</p>
+      <h1>Calisthenics Tracker</h1>
+    </div>
+    <div class="account">
+      <span id="user-label">Not signed in</span>
+      <button id="sign-in" class="button primary">Sign in with Google</button>
+      <button id="sign-out" class="button hidden">Sign out</button>
+    </div>
+  </header>
+
+  <nav class="tabs" aria-label="Main navigation">
+    <button class="tab active" data-view="dashboard">Dashboard</button>
+    <button class="tab" data-view="workouts">Workouts</button>
+    <button class="tab" data-view="history">History</button>
+    <button class="tab" data-view="skills">Skills</button>
+    <button class="tab" data-view="notes">Notes</button>
+  </nav>
+
+  <main>
+    <section id="dashboard" class="view active">
+      <div class="section-heading">
+        <div><p class="eyebrow">OVERVIEW</p><h2>Your training</h2></div>
+        <span id="sync-status" class="status">Local preview</span>
+      </div>
+      <div class="stats-grid">
+        <article class="stat-card"><span>Sessions completed</span><strong id="session-count">0</strong></article>
+        <article class="stat-card"><span>This week</span><strong id="week-count">0</strong></article>
+        <article class="stat-card"><span>Average difficulty</span><strong id="avg-difficulty">—</strong></article>
+      </div>
+      <article class="panel">
+        <h3>Weekly plan</h3>
+        <div class="week-grid">
+          <div><b>Saturday</b><span>Push + Core</span></div>
+          <div><b>Monday</b><span>Pull + Core</span></div>
+          <div><b>Wednesday</b><span>Legs + Full Body</span></div>
+        </div>
+      </article>
+      <article class="panel">
+        <h3>Sessions by week</h3>
+        <canvas id="progress-chart" height="130" aria-label="Sessions by week chart"></canvas>
+        <p id="chart-empty" class="muted">Complete a workout to start building your chart.</p>
+      </article>
+    </section>
+
+    <section id="workouts" class="view">
+      <div class="section-heading"><div><p class="eyebrow">TRAINING PLAN</p><h2>Workout sessions</h2></div></div>
+      <div id="workout-list" class="workout-grid"></div>
+    </section>
+
+    <section id="history" class="view">
+      <div class="section-heading"><div><p class="eyebrow">YOUR RECORDS</p><h2>Workout history</h2></div></div>
+      <div id="history-list" class="panel"><p class="muted">No sessions recorded yet.</p></div>
+    </section>
+
+    <section id="skills" class="view">
+      <div class="section-heading"><div><p class="eyebrow">SKILL DEVELOPMENT</p><h2>Skills tracker</h2></div></div>
+      <form id="skill-form" class="panel form-grid">
+        <label>Skill name<input name="name" placeholder="e.g. Handstand" required></label>
+        <label>Current level<input name="level" placeholder="e.g. Wall hold" required></label>
+        <label>Hold time / result<input name="result" placeholder="e.g. 20 seconds"></label>
+        <label>Notes<input name="notes" placeholder="Optional"></label>
+        <button class="button primary" type="submit">Add skill update</button>
+      </form>
+      <div id="skills-list" class="item-list"></div>
+    </section>
+
+    <section id="notes" class="view">
+      <div class="section-heading"><div><p class="eyebrow">TRAINING JOURNAL</p><h2>Notes & recovery</h2></div></div>
+      <form id="note-form" class="panel form-grid">
+        <label>Type<select name="type"><option>General</option><option>Fatigue</option><option>Pain / discomfort</option><option>Recovery</option></select></label>
+        <label>Date<input name="date" type="date" required></label>
+        <label class="full">Note<textarea name="body" rows="4" placeholder="Write your training note..." required></textarea></label>
+        <button class="button primary" type="submit">Save note</button>
+      </form>
+      <div id="notes-list" class="item-list"></div>
+    </section>
+  </main>
+
+  <dialog id="session-dialog">
+    <form id="session-form" method="dialog">
+      <div class="dialog-heading"><div><p class="eyebrow">WORKOUT LOG</p><h2 id="session-title">Record session</h2></div><button type="button" id="close-dialog" class="icon-button" aria-label="Close">×</button></div>
+      <input type="hidden" name="workoutId">
+      <div id="exercise-fields"></div>
+      <label>Session difficulty (1–10)<input name="difficulty" type="number" min="1" max="10" value="5" required></label>
+      <label>Session notes<textarea name="notes" rows="3" placeholder="How did the session feel?"></textarea></label>
+      <div class="dialog-actions"><button type="button" id="cancel-session" class="button">Cancel</button><button type="submit" class="button primary">Save session</button></div>
+    </form>
+  </dialog>
+
+  <footer><span>Calisthenics Tracker</span><span>Data syncs to Firebase after setup and sign-in.</span></footer>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
